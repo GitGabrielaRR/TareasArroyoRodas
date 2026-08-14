@@ -1,0 +1,9 @@
+# Archivos generados por Python (bytecode compilado)
+__pycache__/
+*.pyc
+*.pyo
+
+# Entornos virtuales
+.venv/
+venv/
+env/
