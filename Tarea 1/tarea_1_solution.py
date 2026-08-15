@@ -2,8 +2,9 @@
 """
 Tarea 1 - MT-7003 Microprocesadores y microcontroladores
 Metodo 1: filtrar_vocales
+Metodo 2: encontrar_extremos
 
-Este archivo contiene la implementacion del primer metodo solicitado
+Este archivo contiene la implementacion del primer y segundo metodo solicitado
 en la seccion practica de la tarea.
 """
 
@@ -17,13 +18,21 @@ en la seccion practica de la tarea.
 #   dejaron centralizados aqui para que sea facil ajustarlos y hacerlos
 #   coincidir con los que espere la prueba.
 # ---------------------------------------------------------------------------
+# Codigos de retorno generales
 EXITO = 0               # La funcion se ejecuto correctamente
+
+# Codigos de error de filtrar_vocales
 ERR_NO_STRING = 1       # 'cadena' no es un string
 ERR_VACIO = 2           # 'cadena' es un string vacio
 ERR_NO_LETRAS = 3       # 'cadena' contiene caracteres que no son letras
 ERR_MUY_LARGO = 4       # 'cadena' tiene mas de 30 caracteres
 ERR_BANDERA = 5         # 'bandera' no es un booleano (True/False)
 
+# Codigos de error de encontrar_extremos
+ERROR_NO_LISTA = -10
+ERROR_ELEMENTO_NO_NUMERO = -20
+ERROR_LISTA_VACIA = -30
+ERROR_MAS_DE_15 = -40
 
 def filtrar_vocales(cadena, bandera):
     """
@@ -76,3 +85,43 @@ def filtrar_vocales(cadena, bandera):
 
     # h/i. Ejecucion correcta: se devuelve el codigo de exito y la cadena.
     return EXITO, filtrado
+
+def encontrar_extremos(lista_numeros):
+    """Obtiene el valor minimo y maximo de una lista numerica.
+
+    Parametros:
+        lista_numeros: Lista de numeros enteros o flotantes con
+        un maximo de 15 elementos.
+
+    Retorna:
+        Una tupla formada por el codigo de estado, valor minimo
+        y valor maximo. En caso de error, los dos ultimos valores
+        son None.
+    """
+
+    # Verifica que el parametro recibido sea una lista.
+    if not isinstance(lista_numeros, list):
+        return ERROR_NO_LISTA, None, None
+
+    # Verifica que todos los elementos sean numeros.
+    for numero in lista_numeros:
+        if isinstance(numero, bool):
+            return ERROR_ELEMENTO_NO_NUMERO, None, None
+
+        if not isinstance(numero, (int, float)):
+            return ERROR_ELEMENTO_NO_NUMERO, None, None
+
+    # Verifica que la lista no este vacia.
+    if len(lista_numeros) == 0:
+        return ERROR_LISTA_VACIA, None, None
+
+    # Verifica que la lista tenga como maximo 15 elementos.
+    if len(lista_numeros) > 15:
+        return ERROR_MAS_DE_15, None, None
+
+    # Una vez superadas todas las validaciones,
+    # se obtienen los extremos de la lista.
+    valor_minimo = min(lista_numeros)
+    valor_maximo = max(lista_numeros)
+
+    return EXITO, valor_minimo, valor_maximo
