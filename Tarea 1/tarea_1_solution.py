@@ -29,10 +29,10 @@ ERR_MUY_LARGO = 4       # 'cadena' tiene mas de 30 caracteres
 ERR_BANDERA = 5         # 'bandera' no es un booleano (True/False)
 
 # Codigos de error de encontrar_extremos
-ERROR_NO_LISTA = -10
-ERROR_ELEMENTO_NO_NUMERO = -20
-ERROR_LISTA_VACIA = -30
-ERROR_MAS_DE_15 = -40
+ERROR_NO_LISTA = -10               # La entrada recibida no es una lista.
+ERROR_ELEMENTO_NO_NUMERO = -20     # La lista contiene al menos un elemento que no es int o float.
+ERROR_LISTA_VACIA = -30            # La lista recibida no contiene elementos.
+ERROR_MAS_DE_15 = -40              # La lista contiene más de los 15 elementos permitidos.
 
 def filtrar_vocales(cadena, bandera):
     """
