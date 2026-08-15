@@ -3,8 +3,7 @@
 Tarea 1 - MT-7003 Microprocesadores y microcontroladores
 Metodo 1: filtrar_vocales
 
-Este archivo contiene la implementacion del primer metodo solicitado
-en la seccion practica de la tarea.
+Este archivo contiene la implementacion del primer metodo solicitado.
 """
 
 # ---------------------------------------------------------------------------
@@ -42,37 +41,37 @@ def filtrar_vocales(cadena, bandera):
                          En caso de error este valor es None.
     """
 
-    # a. Verificar que 'cadena' sea un string.
+    # Verificar que 'cadena' sea un string.
     if not isinstance(cadena, str):
         return ERR_NO_STRING, None
 
-    # c. Verificar que 'cadena' no sea un string vacio.
-    #    (Se revisa antes que "solo letras" porque "" no tiene letras.)
+    # Verificar que 'cadena' no sea un string vacio.
+    # (Se revisa antes que "solo letras" porque "" no tiene letras.)
     if cadena == "":
         return ERR_VACIO, None
 
-    # b. Verificar que 'cadena' solo contenga letras del abecedario.
+    # Verificar que 'cadena' solo contenga letras del abecedario.
     if not cadena.isalpha():
         return ERR_NO_LETRAS, None
 
-    # d. Verificar que 'cadena' no sea mayor a 30 caracteres.
+    # Verificar que 'cadena' no sea mayor a 30 caracteres.
     if len(cadena) > 30:
         return ERR_MUY_LARGO, None
 
-    # e. Verificar que 'bandera' sea un booleano (True o False).
+    # Verificar que 'bandera' sea un booleano (True o False).
     if not isinstance(bandera, bool):
         return ERR_BANDERA, None
 
     # Conjunto de vocales (minusculas y mayusculas) usado para el filtrado.
     vocales = "aeiouAEIOU"
 
-    # f. Si la bandera es True -> devolver solo las vocales.
-    # g. Si la bandera es False -> devolver solo las consonantes.
-    #    En ambos casos se conserva el orden original de aparicion.
+    # Si la bandera es True -> devolver solo las vocales.
+    # Si la bandera es False -> devolver solo las consonantes.
+    # En ambos casos se conserva el orden original de aparicion.
     if bandera:
         filtrado = "".join(letra for letra in cadena if letra in vocales)
     else:
         filtrado = "".join(letra for letra in cadena if letra not in vocales)
 
-    # h/i. Ejecucion correcta: se devuelve el codigo de exito y la cadena.
+    # Ejecucion correcta: se devuelve el codigo de exito y la cadena.
     return EXITO, filtrado
