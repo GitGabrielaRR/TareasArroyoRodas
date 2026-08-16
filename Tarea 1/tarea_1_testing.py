@@ -8,7 +8,7 @@ el metodo con muchas entradas distintas y no solo con valores fijos.
 El archivo con el codigo (tarea_1.py) debe estar en la misma carpeta.
 """
 
-import tarea_1
+import tarea_1_solution as tarea_1
 import random
 import string
 
@@ -34,6 +34,7 @@ def cadena_aleatoria(largo):
 # Prueba 1
 # Verifica todos los casos de error del metodo filtrar_vocales.
 def test_casos_error_filtrar_vocales():
+
     # cadena no es un string: se prueba con un numero aleatorio -> codigo 1
     numero = random.randint(1, 1000)
     estado, res = tarea_1.filtrar_vocales(numero, True)

@@ -29,10 +29,11 @@ ERR_MUY_LARGO = 4       # 'cadena' tiene mas de 30 caracteres
 ERR_BANDERA = 5         # 'bandera' no es un booleano (True/False)
 
 # Codigos de error de encontrar_extremos
-ERROR_NO_LISTA = -10               # La entrada recibida no es una lista.
-ERROR_ELEMENTO_NO_NUMERO = -20     # La lista contiene al menos un elemento que no es int o float.
-ERROR_LISTA_VACIA = -30            # La lista recibida no contiene elementos.
-ERROR_MAS_DE_15 = -40              # La lista contiene más de los 15 elementos permitidos.
+ERROR_NO_LISTA = -10            # La entrada recibida no es una lista.
+ERROR_ELEMENTO_NO_NUMERO = -20  # Al menos un elemento que no es int o float.
+ERROR_LISTA_VACIA = -30         # La lista recibida no contiene elementos.
+ERROR_MAS_DE_15 = -40           # Contiene más de los 15 elementos permitidos.
+
 
 def filtrar_vocales(cadena, bandera):
     """
@@ -86,6 +87,7 @@ def filtrar_vocales(cadena, bandera):
     # h/i. Ejecucion correcta: se devuelve el codigo de exito y la cadena.
     return EXITO, filtrado
 
+
 def encontrar_extremos(lista_numeros):
     """Obtiene el valor minimo y maximo de una lista numerica.
 
@@ -116,6 +118,7 @@ def encontrar_extremos(lista_numeros):
         return ERROR_LISTA_VACIA, None, None
 
     # Verifica que la lista tenga como maximo 15 elementos.
+
     if len(lista_numeros) > 15:
         return ERROR_MAS_DE_15, None, None
 
