@@ -1,4 +1,4 @@
-# Tareas_Arroyo_Rodas
+# TareasArroyoRodas
 Repositorio Microprocesadores y Microcontroladores
 
 ## Integrantes
