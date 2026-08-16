@@ -1,20 +1,15 @@
-# -*- coding: utf-8 -*-
 """
 Tarea 1 - MT-7003 Microprocesadores y microcontroladores
 Metodo 1: filtrar_vocales
 Metodo 2: encontrar_extremos
 
+Este archivo contiene la implementacion del primer metodo solicitado
 Este archivo contiene la implementacion del primer y segundo metodo solicitado
 en la seccion practica de la tarea.
 """
 
-# ---------------------------------------------------------------------------
-# Codigos de error / exito (cada uno es unico)
-#
-# NOTA IMPORTANTE:
-#   El archivo de pruebas "tarea_1_testing.py" define los valores exactos
-#   que se esperan para cada codigo de error. Como no se dispuso de ese
-#   archivo al escribir este codigo, se eligieron valores unicos y se
+
+@@ -17,33 +18,41 @@
 #   dejaron centralizados aqui para que sea facil ajustarlos y hacerlos
 #   coincidir con los que espere la prueba.
 # ---------------------------------------------------------------------------
@@ -29,10 +24,10 @@ ERR_MUY_LARGO = 4       # 'cadena' tiene mas de 30 caracteres
 ERR_BANDERA = 5         # 'bandera' no es un booleano (True/False)
 
 # Codigos de error de encontrar_extremos
-ERROR_NO_LISTA = -10               # La entrada recibida no es una lista.
-ERROR_ELEMENTO_NO_NUMERO = -20     # La lista contiene al menos un elemento que no es int o float.
-ERROR_LISTA_VACIA = -30            # La lista recibida no contiene elementos.
-ERROR_MAS_DE_15 = -40              # La lista contiene más de los 15 elementos permitidos.
+ERROR_NO_LISTA = -10
+ERROR_ELEMENTO_NO_NUMERO = -20
+ERROR_LISTA_VACIA = -30
+ERROR_MAS_DE_15 = -40
 
 def filtrar_vocales(cadena, bandera):
     """
@@ -56,32 +51,9 @@ def filtrar_vocales(cadena, bandera):
         return ERR_NO_STRING, None
 
     # c. Verificar que 'cadena' no sea un string vacio.
-    #    (Se revisa antes que "solo letras" porque "" no tiene letras.)
-    if cadena == "":
-        return ERR_VACIO, None
 
-    # b. Verificar que 'cadena' solo contenga letras del abecedario.
-    if not cadena.isalpha():
-        return ERR_NO_LETRAS, None
 
-    # d. Verificar que 'cadena' no sea mayor a 30 caracteres.
-    if len(cadena) > 30:
-        return ERR_MUY_LARGO, None
-
-    # e. Verificar que 'bandera' sea un booleano (True o False).
-    if not isinstance(bandera, bool):
-        return ERR_BANDERA, None
-
-    # Conjunto de vocales (minusculas y mayusculas) usado para el filtrado.
-    vocales = "aeiouAEIOU"
-
-    # f. Si la bandera es True -> devolver solo las vocales.
-    # g. Si la bandera es False -> devolver solo las consonantes.
-    #    En ambos casos se conserva el orden original de aparicion.
-    if bandera:
-        filtrado = "".join(letra for letra in cadena if letra in vocales)
-    else:
-        filtrado = "".join(letra for letra in cadena if letra not in vocales)
+@@ -76,3 +85,43 @@ def filtrar_vocales(cadena, bandera):
 
     # h/i. Ejecucion correcta: se devuelve el codigo de exito y la cadena.
     return EXITO, filtrado
@@ -104,24 +76,4 @@ def encontrar_extremos(lista_numeros):
         return ERROR_NO_LISTA, None, None
 
     # Verifica que todos los elementos sean numeros.
-    for numero in lista_numeros:
-        if isinstance(numero, bool):
-            return ERROR_ELEMENTO_NO_NUMERO, None, None
-
-        if not isinstance(numero, (int, float)):
-            return ERROR_ELEMENTO_NO_NUMERO, None, None
-
-    # Verifica que la lista no este vacia.
-    if len(lista_numeros) == 0:
-        return ERROR_LISTA_VACIA, None, None
-
-    # Verifica que la lista tenga como maximo 15 elementos.
-    if len(lista_numeros) > 15:
-        return ERROR_MAS_DE_15, None, None
-
-    # Una vez superadas todas las validaciones,
-    # se obtienen los extremos de la lista.
-    valor_minimo = min(lista_numeros)
-    valor_maximo = max(lista_numeros)
-
-    return EXITO, valor_minimo, valor_maximo
+    for numero in 

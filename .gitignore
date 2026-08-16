@@ -7,3 +7,6 @@ __pycache__/
 .venv/
 venv/
 env/
+
+# Archivos de explicacion (no se suben al repo)
+explicacion.html
