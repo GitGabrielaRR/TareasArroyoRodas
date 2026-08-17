@@ -4,6 +4,7 @@
 
 
 def sumar(a, b):
-    resultado=a + b
-    mensaje = "este comentario hace que la linea sea demasiado larga a proposito para superar el limite"
+    resultado = a + b
+    mensaje = "El resultado de la suma es: " + str(resultado)
+    print(mensaje)
     return resultado
