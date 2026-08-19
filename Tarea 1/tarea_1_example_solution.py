@@ -11,28 +11,26 @@ en la seccion practica de la tarea.
 # ---------------------------------------------------------------------------
 # Codigos de error / exito (cada uno es unico)
 #
-# NOTA IMPORTANTE:
-#   El archivo de pruebas "tarea_1_testing.py" define los valores exactos
-#   que se esperan para cada codigo de error. Como no se dispuso de ese
-#   archivo al escribir este codigo, se eligieron valores unicos y se
-#   dejaron centralizados aqui para que sea facil ajustarlos y hacerlos
-#   coincidir con los que espere la prueba.
+# NOTA:
+#   Los valores coinciden con los que espera el archivo de pruebas oficial
+#   "tarea_1_testing.py" entregado por el curso. Se dejan centralizados aqui
+#   para facilitar su mantenimiento.
 # ---------------------------------------------------------------------------
 # Codigos de retorno generales
 EXITO = 0               # La funcion se ejecuto correctamente
 
 # Codigos de error de filtrar_vocales
-ERR_NO_STRING = 1       # 'cadena' no es un string
-ERR_VACIO = 2           # 'cadena' es un string vacio
-ERR_NO_LETRAS = 3       # 'cadena' contiene caracteres que no son letras
-ERR_MUY_LARGO = 4       # 'cadena' tiene mas de 30 caracteres
-ERR_BANDERA = 5         # 'bandera' no es un booleano (True/False)
+ERR_NO_STRING = -100    # 'cadena' no es un string
+ERR_NO_LETRAS = -200    # 'cadena' contiene caracteres que no son letras
+ERR_VACIO = -300        # 'cadena' es un string vacio
+ERR_MUY_LARGO = -400    # 'cadena' tiene mas de 30 caracteres
+ERR_BANDERA = -500      # 'bandera' no es un booleano (True/False)
 
 # Codigos de error de encontrar_extremos
-ERROR_NO_LISTA = -10            # La entrada recibida no es una lista.
-ERROR_ELEMENTO_NO_NUMERO = -20  # Al menos un elemento que no es int o float.
-ERROR_LISTA_VACIA = -30         # La lista recibida no contiene elementos.
-ERROR_MAS_DE_15 = -40           # Contiene más de los 15 elementos permitidos.
+ERROR_NO_LISTA = -600            # La entrada recibida no es una lista.
+ERROR_ELEMENTO_NO_NUMERO = -700  # Al menos un elemento que no es int o float.
+ERROR_LISTA_VACIA = -800         # La lista recibida no contiene elementos.
+ERROR_MAS_DE_15 = -900           # Contiene más de los 15 elementos permitidos.
 
 
 def filtrar_vocales(cadena, bandera):

@@ -1,153 +1,174 @@
-# -*- coding: utf-8 -*-
-"""
-Pruebas de pytest para los metodos 'filtrar_vocales' y 'encontrar_extremos'
-definidos en tarea_1.py.
-
-Sigue el mismo formato del archivo de ejemplo entregado por el curso e
-incorpora aleatorizacion con las librerias 'random' y 'string' para probar
-los metodos con muchas entradas distintas y no solo con valores fijos.
-El archivo con el codigo (tarea_1.py) debe estar en la misma carpeta.
-"""
-
-import tarea_1_solution as tarea_1
+import tarea_1_example_solution
 import random
 import string
+import pytest
 
-# ---------------------------------------------------------------------------
-# Codigos de retorno esperados de filtrar_vocales (definidos en tarea_1.py)
-#   Exito ................................. 0
-#   cadena no es un string ................ 1
-#   cadena es un string vacio ............. 2
-#   cadena contiene caracteres no-letra ... 3
-#   cadena con mas de 30 caracteres ....... 4
-#   bandera no es un booleano ............. 5
-#
-# Codigos de retorno esperados de encontrar_extremos (definidos en tarea_1.py)
-#   Exito ................................... 0
-#   la entrada no es una lista ............. -10
-#   un elemento no es int/float ........... -20
-#   la lista esta vacia ................... -30
-#   la lista tiene mas de 15 elementos .... -40
-# ---------------------------------------------------------------------------
+# Codigos de retorno esperados
+# Caso de éxito => 0
 
-# Conjunto de vocales usado para calcular el resultado esperado.
-VOCALES = "aeiouAEIOU"
+# Errores esperados metodo filtrar_vocales
+# Error en caso de que cadena no sea un string => -100
+# Error en caso de que cadena posea algo distinto a letras del abecedario => -200
+# Error en caso de que cadena sea un string vacío => -300
+# Error en caso de que cadena sea mayor a 30 caracteres => -400
+# Error en caso de que bandera no sea un booleano => -500
 
-
-def cadena_aleatoria(largo):
-    """Genera una cadena aleatoria formada solo por letras del abecedario."""
-    return "".join(random.choice(string.ascii_letters) for _ in range(largo))
-
-
-def lista_aleatoria(largo):
-    """Genera una lista de numeros aleatorios (int o float mezclados)."""
-    lista = []
-    for _ in range(largo):
-        if random.choice([True, False]):
-            lista.append(random.randint(-1000, 1000))
-        else:
-            lista.append(random.uniform(-1000, 1000))
-    return lista
+# Errores esperados metodo encontrar_extremos
+# Error en caso de que el parámetro no sea una lista => -600
+# Error en caso de que la lista contenga elementos no numéricos => -700
+# Error en caso de que la lista esté vacía => -800
+# Error en caso de que la lista tenga más de 15 elementos => -900
 
 
 # Prueba 1
-# Verifica todos los casos de error del metodo filtrar_vocales.
+# Verifica todos los casos de error de filtrar_vocales
 def test_casos_error_filtrar_vocales():
-
-    # cadena no es un string: se prueba con un numero aleatorio -> codigo 1
-    numero = random.randint(1, 1000)
-    estado, res = tarea_1.filtrar_vocales(numero, True)
-    assert estado == 1
+    # Error si el parametro cadena no es un string
+    estado, res = tarea_1_example_solution.filtrar_vocales(cadena=123, bandera=True)
+    assert estado == -100
     assert res is None
 
-    # cadena es un string vacio -> codigo 2
-    estado, res = tarea_1.filtrar_vocales("", True)
-    assert estado == 2
+    # Error si cadena posee valores indebidos (no alfabéticos)
+    random_string = "abc{}123".format(random.choice(string.punctuation))
+    estado, res = tarea_1_example_solution.filtrar_vocales(
+        cadena=random_string, bandera=True)
+    assert estado == -200
     assert res is None
 
-    # cadena con un caracter que no es letra (un digito aleatorio) -> codigo 3
-    digito = random.choice(string.digits)
-    estado, res = tarea_1.filtrar_vocales(cadena_aleatoria(5) + digito, True)
-    assert estado == 3
+    # Error si cadena es vacía
+    estado, res = tarea_1_example_solution.filtrar_vocales(
+        cadena="", bandera=False)
+    assert estado == -300
     assert res is None
 
-    # cadena con mas de 30 caracteres (largo aleatorio 31..50) -> codigo 4
-    estado, res = tarea_1.filtrar_vocales(
-        cadena_aleatoria(random.randint(31, 50)), True)
-    assert estado == 4
+    # Error si cadena es mayor a 30 caracteres
+    long_string = "a" * 31
+    estado, res = tarea_1_example_solution.filtrar_vocales(
+        cadena=long_string, bandera=True)
+    assert estado == -400
     assert res is None
 
-    # bandera que no es booleano (valor no-bool aleatorio) -> codigo 5
-    bandera_invalida = random.choice(["True", 1, 0, None, 3.5])
-    estado, res = tarea_1.filtrar_vocales(
-        cadena_aleatoria(5), bandera_invalida)
-    assert estado == 5
+    # Error si bandera no es un booleano
+    estado, res = tarea_1_example_solution.filtrar_vocales(
+        cadena="ejemplo", bandera="True")
+    assert estado == -500
+    assert res is None
+
+    estado, res = tarea_1_example_solution.filtrar_vocales(
+        cadena="ejemplo", bandera=1)
+    assert estado == -500
     assert res is None
 
 
 # Prueba 2
-# Verifica los casos de exito del metodo filtrar_vocales usando una
-# cadena aleatoria valida y comparando contra el resultado esperado.
+# Verifica casos de éxito de filtrar_vocales
 def test_casos_exito_filtrar_vocales():
-    # cadena valida: solo letras y con un largo aleatorio entre 1 y 30.
-    cadena = cadena_aleatoria(random.randint(1, 30))
-
-    # bandera True -> debe devolver solo las vocales, en el mismo orden.
-    esperado_vocales = "".join(c for c in cadena if c in VOCALES)
-    estado, res = tarea_1.filtrar_vocales(cadena, True)
+    # Caso: extraer vocales
+    estado, res = tarea_1_example_solution.filtrar_vocales(
+        cadena="HolaMundo", bandera=True)
     assert estado == 0
-    assert res == esperado_vocales
+    assert res == "oauo"
 
-    # bandera False -> debe devolver solo las consonantes, en el mismo orden.
-    esperado_consonantes = "".join(c for c in cadena if c not in VOCALES)
-    estado, res = tarea_1.filtrar_vocales(cadena, False)
+    # Caso: extraer consonantes
+    estado, res = tarea_1_example_solution.filtrar_vocales(
+        cadena="HolaMundo", bandera=False)
     assert estado == 0
-    assert res == esperado_consonantes
+    assert res == "HlMnd"
+
+    # Caso: solo vocales en entrada
+    estado, res = tarea_1_example_solution.filtrar_vocales(
+        cadena="aeiou", bandera=True)
+    assert estado == 0
+    assert res == "aeiou"
+
+    # Caso: solo consonantes con bandera True (retorna vacío)
+    estado, res = tarea_1_example_solution.filtrar_vocales(
+        cadena="bcdfg", bandera=True)
+    assert estado == 0
+    assert res == ""
+
+    # Caso: mayúsculas y minúsculas mezcladas
+    estado, res = tarea_1_example_solution.filtrar_vocales(
+        cadena="AEIOUaeiou", bandera=False)
+    assert estado == 0
+    assert res == ""
 
 
 # Prueba 3
-# Verifica todos los casos de error del metodo encontrar_extremos.
+# Verifica los casos de error de encontrar_extremos
 def test_casos_error_encontrar_extremos():
-
-    # la entrada no es una lista: se prueba con un valor no-lista -> codigo -10
-    no_lista = random.choice([random.randint(1, 1000), "abc", 3.5, (1, 2)])
-    estado, minimo, maximo = tarea_1.encontrar_extremos(no_lista)
-    assert estado == -10
+    # Error si no es una lista
+    estado, minimo, maximo = tarea_1_example_solution.encontrar_extremos("no es lista")
+    assert estado == -600
     assert minimo is None
     assert maximo is None
 
-    # un elemento no es int/float: se inserta un elemento invalido -> codigo -20
-    lista_invalida = lista_aleatoria(random.randint(1, 5))
-    elemento_invalido = random.choice(["x", None, True, [1]])
-    lista_invalida.insert(
-        random.randint(0, len(lista_invalida)), elemento_invalido)
-    estado, minimo, maximo = tarea_1.encontrar_extremos(lista_invalida)
-    assert estado == -20
+    estado, minimo, maximo = tarea_1_example_solution.encontrar_extremos(123)
+    assert estado == -600
     assert minimo is None
     assert maximo is None
 
-    # la lista esta vacia -> codigo -30
-    estado, minimo, maximo = tarea_1.encontrar_extremos([])
-    assert estado == -30
+    # Error si contiene elementos no numéricos
+    estado, minimo, maximo = tarea_1_example_solution.encontrar_extremos([1, 2, "3", 4])
+    assert estado == -700
     assert minimo is None
     assert maximo is None
 
-    # la lista tiene mas de 15 elementos (largo aleatorio 16..30) -> codigo -40
-    estado, minimo, maximo = tarea_1.encontrar_extremos(
-        lista_aleatoria(random.randint(16, 30)))
-    assert estado == -40
+    estado, minimo, maximo = tarea_1_example_solution.encontrar_extremos([1, 2, True, 4])
+    assert estado == -700
+    assert minimo is None
+    assert maximo is None
+
+    # Error si la lista está vacía
+    estado, minimo, maximo = tarea_1_example_solution.encontrar_extremos([])
+    assert estado == -800
+    assert minimo is None
+    assert maximo is None
+
+    # Error si la lista tiene más de 15 elementos
+    lista_larga = list(range(16))
+    estado, minimo, maximo = tarea_1_example_solution.encontrar_extremos(lista_larga)
+    assert estado == -900
     assert minimo is None
     assert maximo is None
 
 
 # Prueba 4
-# Verifica los casos de exito del metodo encontrar_extremos usando una
-# lista aleatoria valida y comparando contra el minimo y maximo esperados.
+# Verifica los casos de éxito de encontrar_extremos
 def test_casos_exito_encontrar_extremos():
-    # lista valida: solo numeros y con un largo aleatorio entre 1 y 15.
-    lista = lista_aleatoria(random.randint(1, 15))
-
-    estado, minimo, maximo = tarea_1.encontrar_extremos(lista)
+    # Caso con enteros positivos
+    lista_prueba = [5, 2, 8, 1, 9, 3]
+    estado, minimo, maximo = tarea_1_example_solution.encontrar_extremos(lista_prueba)
     assert estado == 0
-    assert minimo == min(lista)
-    assert maximo == max(lista)
+    assert minimo == 1
+    assert maximo == 9
+
+    # Caso con números negativos
+    lista_prueba = [-5, -2, -8, -1]
+    estado, minimo, maximo = tarea_1_example_solution.encontrar_extremos(lista_prueba)
+    assert estado == 0
+    assert minimo == -8
+    assert maximo == -1
+
+    # Caso con floats
+    lista_prueba = [3.5, 1.2, 9.8, 2.1]
+    estado, minimo, maximo = tarea_1_example_solution.encontrar_extremos(lista_prueba)
+    assert estado == 0
+    assert minimo == 1.2
+    assert maximo == 9.8
+
+    # Caso con un solo elemento
+    lista_prueba = [42]
+    estado, minimo, maximo = tarea_1_example_solution.encontrar_extremos(lista_prueba)
+    assert estado == 0
+    assert minimo == 42
+    assert maximo == 42
+
+    # Caso aleatorio
+    lista_prueba = [random.randint(-100, 100) for _ in range(random.randint(2, 15))]
+    esperado_min = min(lista_prueba)
+    esperado_max = max(lista_prueba)
+    estado, minimo, maximo = tarea_1_example_solution.encontrar_extremos(lista_prueba)
+    assert estado == 0
+    assert minimo == esperado_min
+    assert maximo == esperado_max
